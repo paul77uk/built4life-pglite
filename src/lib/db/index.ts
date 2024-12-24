@@ -16,7 +16,11 @@ export async function getDB() {
 	return metaDb;
 }
 
-export const db = await getDB();
+async function initializeDB() {
+	return await getDB();
+}
+
+export const db = await initializeDB();
 
 // Initialize the database schema.
 export const initSchema = async () => {
