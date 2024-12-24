@@ -2,7 +2,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Label from '$lib/components/ui/label/label.svelte';
-	import { db } from '$lib/db';
+	import { getDB } from '$lib/db';
+
 	// import { export_to_json, onChange } from '$lib/stores/file-transfer-store.svelte';
 	// import { exerciseStore, saveExercise } from '$lib/stores/my-exercises-store.svelte';
 	import {
@@ -86,11 +87,13 @@
 	let workouts: Workout[] = $state([]);
 
 	const insertWorkout = async () => {
+		const db = await getDB();
 		await db.sql`INSERT INTO workout (title) VALUES (${input})`;
 		input = '';
 	};
 
 	const getWorkouts = async () => {
+		const db = await getDB();
 		workouts = (await db.sql<Workout[]>`SELECT * FROM workout`).rows.flat();
 		console.log('test', workouts);
 	};

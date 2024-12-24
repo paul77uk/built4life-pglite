@@ -1,7 +1,9 @@
 import { PGlite } from '@electric-sql/pglite';
 // import { drizzle } from 'drizzle-orm/pglite';
+
 let dbInstance: PGlite;
 // Implement a singleton pattern to make sure we only create one database instance.
+
 export async function getDB() {
 	if (dbInstance) {
 		return dbInstance;
@@ -16,14 +18,8 @@ export async function getDB() {
 	return metaDb;
 }
 
-async function initializeDB() {
-	return await getDB();
-}
-
-export const db = await initializeDB();
-
 // Initialize the database schema.
-export const initSchema = async () => {
+export const initSchema = async (db: PGlite) => {
 	console.log('Initializing schema');
 	console.log(db);
 	await db.exec(`

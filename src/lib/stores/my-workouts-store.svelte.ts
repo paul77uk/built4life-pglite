@@ -1,4 +1,4 @@
-import { db } from '$lib/db';
+import { getDB } from '$lib/db';
 import {
 	addWorkout,
 	deleteWorkoutById,
@@ -37,6 +37,7 @@ export const deleteWorkout = async (id: number) => {
 // };
 
 export const getFilteredWorkouts = async (filter: string) => {
+	const db = await getDB();
 	const result = await db.sql`SELECT * FROM workout WHERE title ILIKE ${`%${filter}%`}`;
 	workouts = result.rows as Workout[];
 };
